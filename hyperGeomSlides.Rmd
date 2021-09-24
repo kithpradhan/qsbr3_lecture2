@@ -1,0 +1,109 @@
+---
+title: "hypergeometricPres"
+output: 
+  ioslides_presentation
+  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## an example
+
+Imagine an urn filled with 400 gold and 600 black balls all mixed up.  You dip your hand in and pull out a handful(10 balls).  How many of the 10 are gold?  
+
+
+![](slidepics/urn1.png)
+
+## hypergeometric distribution {.build}
+
+If you start with an urn filled with 400 gold and 600 black balls and pull out a handful of 10 balls, the probability of winding up with *8* gold balls can be found from a hypergeometric distribution with the following parameters:
+
+
+```{r, echo=T}
+  dhyper(x=8, m=400, n=600, k=10)
+
+```
+
+## hypergeometric distribution {.build .smaller}
+
+can we calculate the probability of pulling out all possible values of *x* gold balls?
+
+
+```{r, echo=T}
+  probs =  dhyper(x=0:10, m=400, n=600, k=10)
+  plot(0:10, probs)
+
+```
+
+
+
+## hypergeometric distribution {.build .smaller}
+Using the same parameters as above, what's the probability of pulling out *8 or more* gold balls?
+
+
+```{r, echo=T}
+  probs = dhyper(x=8:10, m=400, n=600, k=10)
+  probs
+  sum(probs)
+
+```
+
+## Why is this important? { .build}
+
+> * Instead of thinking of gold and black balls, let's think of significant/non-significant genes.  
+
+> * In our zika example we looked at a total of *17759* genes.  Of these, *2497* showed significant differential expression between groups, *17759 - 2497 = 15262* were non-significant.
+
+> * Let's pick an arbitrary GO term from the biological processes, GO:0035308 (negative regulation of protein dephosphorylation).  
+
+> * This pathway consists of *62* unique genes, and *13* of them 
+are in our list of significant zika genes.
+
+> * How to we turn this into our hypergeometric urn problem?
+
+## zika problem
+
+* *2497* significant genes
+* *15262* non-significant genes
+* *62* genes in the go pathway
+* *13* of the go pathway genes are are significant
+
+
+## urn problem {.build}
+
+* *2497* gold balls
+* *15262* black balls
+* *62* balls in our handful
+* *13* of the balls in our hand are gold
+
+> * what's the probability of getting 13 or more gold balls in our handful?
+
+```{r, echo=T}
+
+  sum(dhyper(13:62, 2497, 15262, 62))
+
+```
+
+
+## zika problem {.build}
+
+* *2497* significant genes
+* *15262* non-significant genes
+* *62* genes in the go pathway
+* *13* of the go pathway genes are are significant
+* If we sampled 62 genes at random from our set what are the chances 
+we'd find 13 or more significant genes?
+
+```{r, echo=T}
+
+  sum(dhyper(13:62, 2497, 15262, 62))
+
+```
+
+Is the negative regulation of protein dephosphorylation pathway over represented with genes that are associated with zika?
+
+> * That's the p-value above!
+
+

@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = FALSE)
 Imagine an urn filled with 400 gold and 600 black balls all mixed up.  You dip your hand in and pull out a handful(10 balls).  How many of the 10 are gold?  
 
 
-![](slidepics/urn1.png)
+![](slidePics/urn1.png)
 
 ## hypergeometric distribution {.build}
 
